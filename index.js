@@ -1,13 +1,15 @@
 const config = require('./config/config')
-const database = require('./config/database')
+const data = require('./config/database')
+const TiposModels = require('./persistencia/TiposModels')
 
 const app = config()
+const teste = data();
 
-// database.connect(erro => {
-//     if(erro) {
-        console.log(process.env.DB_HOST)
-//     }else {
-//     }
-// })
+teste.connect((error) => {
+  	if (error) {
+    	reject(error);
+  	}
+	console.log(TiposModels.retornarTipos())
+});
 
 app.listen(3000, () => console.log('Servidor OK!!'))
