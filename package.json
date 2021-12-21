@@ -1,0 +1,19 @@
+{
+  "name": "nodecontrol",
+  "version": "1.0.0",
+  "description": "Controle de Tarefas Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/DanielVictoroq/node-control-task.git"
+  },
+  "author": "Daniel Victor de Oliveira Quintino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DanielVictoroq/node-control-task/issues"
+  },
+  "homepage": "https://github.com/DanielVictoroq/node-control-task#readme"
+}
