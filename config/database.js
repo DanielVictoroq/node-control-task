@@ -1,5 +1,4 @@
 const mysql = require('mysql2')
-const { Client } = require('ssh2');
 
 module.exports = () => {
 
@@ -11,5 +10,5 @@ module.exports = () => {
         database: process.env.DB_DATABASE
     }
 
-    return mysql.createConnection(dbServer);;
+    return mysql.createConnection(dbServer);
 }
