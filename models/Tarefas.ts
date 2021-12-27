@@ -1,7 +1,7 @@
 const database = require('../config/database')
 import { ITarefas } from '../interface/ITarefas'; 
-const conexao = database();
-class Tarefas implements ITarefas {
+
+export class Tarefas implements ITarefas {
     title: string;
     description: string;
     dt_task: Date;
@@ -13,7 +13,7 @@ class Tarefas implements ITarefas {
     updated_at: Date;
     deleted_at: Date;
 
-    constructor(){
+    constructor() {
         this.title = ''
         this.description = ''
         this.dt_task = new Date
@@ -26,11 +26,11 @@ class Tarefas implements ITarefas {
         this.deleted_at = new Date
     }
 
-    retornarTipos (res: any): any {
+    static retornarTipos (res: any): any {
+        const conexao = database.connectDB();
         conexao.query('SELECT * FROM controlBase.types_models', function(err: any, rows: any) {
             if(err) { return res.json(err) }
             else { return res.json(rows) }
         })
     }
 }
-module.exports = new Tarefas
