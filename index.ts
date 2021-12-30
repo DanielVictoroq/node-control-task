@@ -1,5 +1,5 @@
-import config from './config/config';
-import routes from './routes/rotas';
+import config from './src/config/config';
+import routes from './src/routes/rotas';
 
 const app = config()
 app.use('/', routes);

@@ -11,9 +11,9 @@ export default () => {
     app.use(bodyParser.json())
 
     consignUse
-        .include('controllers')
-        .include('routes')
-        .include('models')
+        .include('src/controllers')
+        .include('src/routes')
+        .include('src/models')
         .into(app)
 
    return app
