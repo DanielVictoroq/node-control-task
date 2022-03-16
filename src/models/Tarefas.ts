@@ -1,4 +1,4 @@
-const database = require('../config/database')
+// const database = require('../config/database')
 import { ITarefas } from '../interface/ITarefas'; 
 
 export class Tarefas implements ITarefas {
@@ -27,10 +27,10 @@ export class Tarefas implements ITarefas {
     }
 
     static retornarTipos (res: any): any {
-        const conexao = database.connectDB();
-        conexao.query('SELECT * FROM controlBase.types_models', function(err: any, rows: any) {
-            if(err) { return res.json(err) }
-            else { return res.json(rows) }
-        })
+        // const conexao = database.connectDB();
+        // conexao.query('SELECT * FROM controlBase.types_models', function(err: any, rows: any) {
+        //     if(err) { return res.json(err) }
+        //     else { return res.json(rows) }
+        // })
     }
 }
