@@ -1,9 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class TypesModels20220104005844 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(new Table({
-      name: "types_models",
+      name: 'types_models',
       columns: [
         {
           name: 'id',
@@ -14,27 +14,27 @@ export class TypesModels20220104005844 implements MigrationInterface {
         },
         {
           name: 'nome',
-          type: 'string'
+          type: 'string',
         },
         {
           name: 'types_id',
-          type: 'string'
+          type: 'string',
         },
         {
-          name: 'createdAt',          
+          name: 'createdAt',
           type: 'timestamp',
-          default: 'now()'
+          default: 'now()',
         },
         {
           name: 'updatedAt',
           type: 'timestamp',
-          default: 'now()'
-        }
-      ]
+          default: 'now()',
+        },
+      ],
     }), true)
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("types_models")
+    await queryRunner.dropTable('types_models')
   }
 }

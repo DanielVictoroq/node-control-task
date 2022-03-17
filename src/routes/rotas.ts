@@ -1,16 +1,18 @@
-import { TiposModelsController } from '../controllers/TiposModelsController'
-import { Router } from 'express';
-import { User } from '../entity/User';
+import { TypesModelsController } from '@/controllers'
+import { Router } from 'express'
 
-const routes = Router();
+export function routes(typeModels: TypesModelsController): Router {
 
-routes.get('/', (req: any, res: any) => { res.send('Servidor rodando, tudo ok') });
-routes.get('/tipoModels', async (req: any, res: any) => {
-  const typeModels = new TiposModelsController(User).lista(res)
-  res.json(await typeModels)
-});
-routes.post('/tipoModels', (req: any, res: any) => {
-  res.send('OK')
-});
+  const router = Router()
 
-export default routes
+  router.get('/', (req: any, res: any) => { res.send('Servidor rodando, tudo ok') })
+
+  router.get('/tipoModels', async (req: any, res: any) => {
+    res.json(await typeModels.list(res))
+  })
+
+  router.post('/tipoModels', (req: any, res: any) => {
+    res.send('OK')
+  })
+  return router
+}

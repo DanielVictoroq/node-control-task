@@ -4,7 +4,8 @@
   "description": "Controle de Tarefas Node",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,js,json' --exec 'ts-node -r tsconfig-paths/register src/index.ts'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint",
     "compile": "tsc",
@@ -45,6 +46,8 @@
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "babel-register": "^6.26.0",
+    "tsconfig-paths": "^3.12.0",
+    "tsconfig-replace-paths": "^0.0.11",
     "eslint": "^8.7.0",
     "eslint-plugin-jest": "^25.7.0",
     "nodemon": "^2.0.15",
