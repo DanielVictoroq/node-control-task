@@ -1,13 +1,13 @@
-import { Tasks } from '@/models'
+import { Task } from '@/models'
 
 export class TasksController {
-  private tasks: Tasks
+  private task: Task
 
-  constructor(tasks: Tasks) {
-    this.tasks = tasks
+  constructor(task: Task) {
+    this.task = task
   }
 
   async lista(res: any) {
-    return this.tasks.title
+    return this.task.title
   }
 }

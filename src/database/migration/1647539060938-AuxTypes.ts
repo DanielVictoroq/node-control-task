@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export class User1647459858493 implements MigrationInterface {
+export class AuxTypes1647539060938 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(new Table({
-      name: 'user',
+      name: 'aux_types',
       columns: [
         {
           name: 'id',
@@ -14,23 +13,13 @@ export class User1647459858493 implements MigrationInterface {
           isGenerated: true,
           generationStrategy: 'increment',
         },
-        {
-          name: 'firstName',
-          type: 'varchar',
-        },
-        {
-          name: 'lastName',
-          type: 'varchar',
-        },
-        {
-          name: 'age',
-          type: 'integer',
-        },
+        { name: 'name', type: 'varchar' },
       ],
     }), true)
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('user')
+    await queryRunner.dropTable('aux_types')
   }
+
 }

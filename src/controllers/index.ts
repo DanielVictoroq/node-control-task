@@ -1,4 +1,5 @@
 export * from './TasksController'
-export * from './TypesModelsController'
+export * from './TypesController'
 export * from './CreditsController'
 export * from './DebtsController'
+export * from './UserController'

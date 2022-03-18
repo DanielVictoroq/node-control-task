@@ -1,1 +1,2 @@
-export * from './TypesModelsRepository'
+export * from './TypesRepository'
+export * from './UserRepository'

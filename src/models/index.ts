@@ -1,4 +1,5 @@
 export * from './Credit'
 export * from './Debt'
-export * from './Tasks'
-export * from './TypesModels'
+export * from './Task'
+export * from './Type'
+export * from './User'

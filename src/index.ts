@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import { configRoutesFunction } from './config/config'
-import { TypesModelsController } from './controllers'
-import { TypesModelsRepository } from './repository'
-import { User } from './database/entity'
+import { TypesController, UserController } from './controllers'
+import { TypesRepository, UserRepository } from './repository'
+import { Types, Users } from './database/entity'
 
-const typesRepository = new TypesModelsRepository(User)
+const typesRepo = new TypesRepository(Types)
+const userRepo = new UserRepository(Users)
 
-configRoutesFunction(new TypesModelsController(typesRepository))
+configRoutesFunction(new TypesController(typesRepo), new UserController(userRepo))

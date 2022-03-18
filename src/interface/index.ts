@@ -1,2 +1,3 @@
-export * from './ITasks'
-export * from './ITypesModels'
+export * from './ITask'
+export * from './IType'
+export * from './IUser'

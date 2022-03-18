@@ -6,18 +6,12 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class User extends BaseEntity {
+export class AuxTypes extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column()
-  firstName?: string
-
-  @Column()
-  lastName?: string
-
-  @Column()
-  age?: number
+  @Column({length: 100})
+  name?: string
 
 }

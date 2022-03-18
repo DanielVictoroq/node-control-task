@@ -1,4 +1,4 @@
-export interface ITasks {
+export interface ITask {
   _title: string;
   _description: string;
   _dt_task: Date;

@@ -1,6 +1,6 @@
-import { ITasks } from '@/interface'
+import { ITask } from '@/interface'
 
-export class Tasks implements ITasks {
+export class Task implements ITask {
   _title: string
   _description: string
   _dt_task: Date
