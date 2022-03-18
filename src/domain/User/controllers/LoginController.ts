@@ -14,7 +14,4 @@ export class LoginController {
     return await this.loginService.login(req, res)
   }
 
-  async insereTipo(req: Request, res: Response): Promise<Response> {
-    return await this.loginService.login(req, res)
-  }
 }

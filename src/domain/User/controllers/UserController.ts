@@ -10,8 +10,4 @@ export class UserController {
   async list(res?: unknown): Promise<returnDataUsers> {
     return await this.userRepo.find(1)
   }
-
-  async insereTipo(res: any, bodyReq: any) {
-    return await this.userRepo.find(1)
-  }
 }

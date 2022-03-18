@@ -14,7 +14,7 @@ export class User1647459858493 implements MigrationInterface {
           isGenerated: true,
           generationStrategy: 'increment',
         },
-        { name: 'login', type: 'varchar' },
+        { name: 'login', type: 'varchar', isUnique: true },
         { name: 'password', type: 'varchar' },
         { name: 'name', type: 'varchar' },
         { name: 'document', type: 'char', length: '15' },

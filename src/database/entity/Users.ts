@@ -15,7 +15,7 @@ export class Users extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column()
+  @Column({unique: true})
   login?: string
 
   @Column()
@@ -27,7 +27,7 @@ export class Users extends BaseEntity {
   @Column({ length: 15 })
   document?: string
 
-  @Column({ length: 100 })
+  @Column({ length: 100, unique: true })
   email?: string
 
   @OneToMany(() => Tasks, tasks => tasks.user_id)

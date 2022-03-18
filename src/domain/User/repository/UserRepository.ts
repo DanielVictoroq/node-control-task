@@ -3,10 +3,13 @@ import { Users } from '@/database/entity'
 
 interface IDatabaseEntity {
   findOne(id: number, options?: findOptions): Promise<Users>
+  find(options?: findOptions): Promise<any>
 }
 
 type findOptions = {
+  where?: { login?: string }
   relations?: string[]
+  take?: number
 }
 
 export class UserRepository {
@@ -21,12 +24,8 @@ export class UserRepository {
     return { data: makeUser(datFind as IUser) }
   }
 
-  async findLogin(user: string, password: string): Promise<returnDataUsers> {
-    const datFind = await this.database.findOne(1)
-    return { data: makeUser(datFind as IUser) }
-  }
-
-  async insereTipo(res: any, bodyReq: any) {
-    return await this.database.findOne(1)
+  async findLogin(login: string): Promise<returnDataUsers> {
+    const datFind = await this.database.find({ where: { login: login }})
+    return { data: makeUser(datFind[0] as IUser) }
   }
 }
