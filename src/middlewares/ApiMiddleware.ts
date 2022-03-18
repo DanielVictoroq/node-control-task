@@ -1,30 +1,19 @@
+
 import { NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 
-export const ApiMiddleware = (allowedAccessTypes: string[]) => async (req: Request, res: Response, next: NextFunction) => {
+export const ApiMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
-    let jwt = req.headers.authorization
+    let token = req.headers.authorization
 
-    // verify request has token
-    if (!jwt) {
+    if (!token) {
       return res.status(401).json({ message: 'Invalid token ' })
     }
 
-    // remove Bearer if using Bearer Authorization mechanism
-    if (jwt.toLowerCase().startsWith('bearer')) {
-      jwt = jwt.slice('bearer'.length).trim()
+    if (token.toLowerCase().startsWith('bearer')) {
+      token = token.slice('bearer'.length).trim()
     }
-
-    // // verify token hasn't expired yet
-    // const decodedToken = await validateToken(jwt)
-
-    // const hasAccessToEndpoint = allowedAccessTypes.some(
-    //   (at) => decodedToken.accessTypes.some((uat) => uat === at),
-    // )
-
-    // if (!hasAccessToEndpoint) {
-    //   return res.status(401).json({ message: 'No enough privileges to access endpoint' })
-    // }
-
+    jwt.verify(token, `${process.env.JWT_SECRET}`)
     next()
   } catch (error) {
     // if (error.name === 'TokenExpiredError') {

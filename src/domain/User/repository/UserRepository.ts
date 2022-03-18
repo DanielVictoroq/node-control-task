@@ -16,9 +16,14 @@ export class UserRepository {
     this.database = database
   }
 
-  async list(res?: unknown): Promise<returnDataUsers> {
+  async find(user_id: number): Promise<returnDataUsers> {
+    const datFind = await this.database.findOne(user_id)
+    return { data: makeUser(datFind as IUser) }
+  }
+
+  async findLogin(user: string, password: string): Promise<returnDataUsers> {
     const datFind = await this.database.findOne(1)
-    return {data : makeUser( datFind as IUser)}
+    return { data: makeUser(datFind as IUser) }
   }
 
   async insereTipo(res: any, bodyReq: any) {

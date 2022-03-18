@@ -10,7 +10,7 @@ declare global {
       DB_SSH_HOST?: string
       DB_SSH_USER?: string
       DB_SSH_PASSWORD?: string
-      JWT_SECRET?: string
+      JWT_SECRET: `${string}`
     }
   }
 }

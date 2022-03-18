@@ -1,8 +1,13 @@
-import { UserController } from '@/domain/User'
-import { TypesController} from '@/domain/Types'
+import { LoginController, UserController } from '@/domain/User'
+import { TypesController } from '@/domain/Types'
 import { Router, Response, Request } from 'express'
+import { ApiMiddleware } from '@/middlewares'
 
-export function routes(types: TypesController, users : UserController): Router {
+export function routes(
+  types: TypesController,
+  users: UserController,
+  login: LoginController,
+): Router {
 
   const router = Router()
 
@@ -14,8 +19,13 @@ export function routes(types: TypesController, users : UserController): Router {
     res.json(await types.list(res))
   })
 
-  router.get('/users', async (req: Request, res: Response) => {
+  router.get('/users', ApiMiddleware, async (req: Request, res: Response) => {
     res.send(await users.list(res))
   })
+
+  router.post('/login', async (req: Request, res: Response) => {
+    return await login.login(req, res)
+  })
+
   return router
 }

@@ -1,18 +1,20 @@
-import { UserRepository, returnDataUsers } from '@/domain/User'
-import { ApiMiddleware } from '@/middlewares'
+import {
+  LoginService,
+} from '@/domain/User'
+import { Request, Response } from 'express'
 
 export class LoginController {
-  private userRepo: UserRepository
+  private loginService: LoginService
 
-  constructor(userRepo: UserRepository) {
-    this.userRepo = userRepo
+  constructor(loginService: LoginService) {
+    this.loginService = loginService
   }
 
-  async login(res?: unknown): Promise<returnDataUsers> {
-    return await this.userRepo.list(1)
+  async login(req: Request, res: Response): Promise<Response> {
+    return await this.loginService.login(req, res)
   }
 
-  async insereTipo(res: any, bodyReq: any) {
-    return await this.userRepo.list(1)
+  async insereTipo(req: Request, res: Response): Promise<Response> {
+    return await this.loginService.login(req, res)
   }
 }

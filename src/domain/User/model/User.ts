@@ -19,6 +19,15 @@ export type returnDataUsers = {
   data: User
 }
 
+export type returnToken = {
+  token?: string
+}
+
+export type returnTokenData = {
+  status?: number
+  message?: string
+}
+
 export function makeUser(input: IUser): User {
   const user = new User(
     input.id,
