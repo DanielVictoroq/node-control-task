@@ -1,5 +1,0 @@
-export * from './TasksController'
-export * from './TypesController'
-export * from './CreditsController'
-export * from './DebtsController'
-export * from './UserController'

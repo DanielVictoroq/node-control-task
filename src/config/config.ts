@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import express from 'express'
 import bodyParser from 'body-parser'
 import { createConnection } from 'typeorm'
 import { routes } from '../routes/rotas'
-import { TypesController, UserController } from '@/controllers'
+import { TypesController } from '@/domain/Types/controllers'
+import { UserController } from '@/domain/User/controllers'
+
+import {Jwt} from 'jsonwebtoken'
 
 const port = process.env.HTTP_PORT || 3000
 

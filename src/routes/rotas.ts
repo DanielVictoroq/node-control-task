@@ -1,4 +1,5 @@
-import { TypesController, UserController } from '@/controllers'
+import { UserController } from '@/domain/User'
+import { TypesController} from '@/domain/Types'
 import { Router, Response, Request } from 'express'
 
 export function routes(types: TypesController, users : UserController): Router {
