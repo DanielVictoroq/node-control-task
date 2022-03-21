@@ -1,4 +1,5 @@
 import { UserRepository } from '@/domain/User'
+import { compareSync } from 'bcrypt'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 export class LoginService {
@@ -9,20 +10,27 @@ export class LoginService {
   }
 
   async login(req: Request, res: Response): Promise<Response> {
-    const user = await this.repository.findLogin(req.body.login)
-    console.log(req.body, user.data)
-    if (req.body.password === user.data.password) {
+    const login = req.body.login
+    return await this.repository.findCustom({ login })
+      .then(user => {
+        if (!user) return res.status(401).json({ message: 'Usuario não encontrado' })
 
-      const token = jwt.sign({
-        name: user.data.name,
-        document: user.data.document,
-      }, `${process.env.JWT_SECRET}`, {
-        expiresIn: 6000,
-
+        if (compareSync(req.body.password, `${user.user?.password}`)) {
+          const token = jwt.sign(
+            {
+              name: user.user?.name,
+              document: user.user?.document,
+            },
+            `${process.env.JWT_SECRET}`,
+            {
+              expiresIn: 6000,
+            },
+          )
+          return res.status(200).json({ token: token })
+        }
+        return res.status(401).json({ message: 'Senha incorreta' })
+      }).catch(err => {
+        return res.status(500).json({ message: err.message })
       })
-      return res.json({ auth: true, token: token })
-    }
-
-    return res.json({ status: 500, message: 'Login inválido!' })
   }
 }

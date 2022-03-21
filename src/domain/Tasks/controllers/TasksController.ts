@@ -1,13 +1,13 @@
 import { Task } from '@/domain/Tasks'
 
 export class TasksController {
-  private task: Task
+  // private task: Task
 
-  constructor(task: Task) {
-    this.task = task
-  }
+  // constructor(task: Task) {
+  //   this.task = task
+  // }
 
   async lista(res: any) {
-    return this.task.title
+    return 'this.task.title'
   }
 }

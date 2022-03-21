@@ -7,7 +7,7 @@ export const ApiMiddleware = (req: Request, res: Response, next: NextFunction) =
     let token = req.headers.authorization
 
     if (!token) {
-      return res.status(401).json({ message: 'Token Inválido' })
+      return res.status(401).json({ message: 'Token inexistente' })
     }
 
     if (token.toLowerCase().startsWith('bearer')) {
@@ -20,7 +20,7 @@ export const ApiMiddleware = (req: Request, res: Response, next: NextFunction) =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.name === 'TokenExpiredError') {
-      res.status(401).json({ message: 'Token Expirado' })
+      res.status(401).json({ message: 'Token expirado' })
       return
     }
 

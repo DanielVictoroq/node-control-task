@@ -15,11 +15,11 @@ export class Users extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column({unique: true})
+  @Column({ unique: true })
   login?: string
 
   @Column()
-  password ?: string
+  password?: string
 
   @Column()
   name?: string
