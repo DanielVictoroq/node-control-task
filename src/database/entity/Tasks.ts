@@ -4,10 +4,7 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne,
   ManyToOne,
-  ManyToMany,
-  OneToMany,
 } from 'typeorm'
 
 import {

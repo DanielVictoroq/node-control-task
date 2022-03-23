@@ -1,31 +1,38 @@
 import { ITask } from '@/domain/Tasks'
 
 export class Task implements ITask {
-  _title: string
-  _description: string
-  _dt_task: Date
-  _type_task_id: number
-  _debt_id: number
-  _credt_id: number
-  _user_id: number
-  _created_at: Date
-  _updated_at: Date
-  _deleted_at: Date
 
-  constructor() {
-    this._title = ''
-    this._description = ''
-    this._dt_task = new Date
-    this._type_task_id = 0
-    this._debt_id = 0
-    this._credt_id = 0
-    this._user_id = 0
-    this._created_at = new Date
-    this._updated_at = new Date
-    this._deleted_at = new Date
-  }
+  constructor(
+    public id?: number,
+    public name?: string,
+    public description?: string,
+    public dt_task?: Date,
+    public type_task_id?: number,
+    public debt_id?: number,
+    public credt_id?: number,
+    public user_id?: number,
+    public created_at?: Date,
+    public updated_at?: Date,
+  ) { }
+}
 
-  get title() {
-    return this._title
-  }
+export type returnDataTasks = {
+  task?: Task,
+  tasks?: Array<Task>
+}
+
+
+export type relationsFields = ['type_task_id', 'debt_id', 'credt_id', 'user_id']
+export type relationsValuesFields = 'type_task_id' | 'debt_id' | 'credt_id' | 'user_id'
+
+export const filterFields = ['name', 'description']
+export type filter = {
+  [key in typeof filterFields[number]]?: string
+}
+
+export const orderFields = ['document', 'site', 'name', 'businessName', 'createdAt', 'updatadAt']
+type orderDirection = 'ASC' | 'DESC'
+
+export type orderValue = {
+  [key in typeof orderFields[number]]?: orderDirection
 }

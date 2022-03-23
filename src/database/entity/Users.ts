@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   OneToMany,
-  JoinColumn,
 } from 'typeorm'
 import { ScheduleFinancials } from './ScheduleFinancials'
 import { Tasks } from './Tasks'

@@ -1,6 +1,7 @@
 import { makeUser, returnDataUsers, IUser } from '@/domain/User'
 import { Users } from '@/database/entity'
 import { User } from '../model'
+import { findOptions } from '@/domain/Utils'
 
 interface IDatabaseEntity {
   findOne(id: number, options?: findOptions): Promise<Users>
@@ -8,12 +9,6 @@ interface IDatabaseEntity {
   find(options?: findOptions): Promise<any>
   create(options?: User): Promise<User>
   save(options?: User): Promise<User>
-}
-
-type findOptions = {
-  where?: object
-  relations?: string[]
-  take?: number
 }
 
 export class UserRepository {
@@ -40,6 +35,6 @@ export class UserRepository {
       arrUser[i] = makeUser(datFind[i] as IUser)
     }
 
-    return {user: arrUser[0], users: arrUser }
+    return { user: arrUser[0], users: arrUser }
   }
 }

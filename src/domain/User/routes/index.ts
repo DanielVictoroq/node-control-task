@@ -8,8 +8,8 @@ export function routesUsers(
 
   const router = Router()
 
-  router.get('/', ApiMiddleware, async (req: Request, res: Response) => {
-    res.send(await users.list(res))
+  router.get('/:id', ApiMiddleware, async (req: Request, res: Response) => {
+    res.send(await users.find(req))
   })
 
   router.post('/criar-usuario', ApiMiddleware, UserCreateValidate, async (req: Request, res: Response) => {

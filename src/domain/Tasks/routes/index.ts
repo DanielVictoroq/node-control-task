@@ -1,6 +1,6 @@
-import { Router, Response, Request } from 'express'
+import { Router, Request, Response } from 'express'
 import { ApiMiddleware } from '@/middlewares'
-import { TasksController } from '../controllers'
+import { TasksController } from '@/domain/Tasks'
 
 export function routesTasks(
   tasks: TasksController,
@@ -9,7 +9,7 @@ export function routesTasks(
   const router = Router()
 
   router.get('/', ApiMiddleware, async (req: Request, res: Response) => {
-    res.send('Tasks')
+    return res.json(await tasks.fetch(req))
   })
 
   return router

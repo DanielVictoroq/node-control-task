@@ -1,4 +1,5 @@
 import { CustomHelpers, ErrorReport } from 'joi'
+import { filter, orderValue, relationsValuesFields } from '../Tasks'
 
 export const documentValidate = <T extends string>(document: T, helpers: CustomHelpers): T | ErrorReport => {
   let sum = 0
@@ -20,4 +21,11 @@ export const documentValidate = <T extends string>(document: T, helpers: CustomH
   if (rest != parseInt(document.substring(10, 11))) return helpers.error('any.invalid')
 
   return document
+}
+
+export type findOptions = {
+  where?: filter
+  relations?: Array<string>
+  order?: orderValue
+  take?: number
 }
