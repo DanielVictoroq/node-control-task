@@ -37,8 +37,8 @@ export class Debts extends BaseEntity {
   type_debts_id?: Types
 
   @ManyToOne(() => Users, users => users.id)
-  @JoinColumn({name: 'users_id'})
-  users_id?: number
+  @JoinColumn({name: 'user_id'})
+  user_id?: Users
 
   @Column({ nullable: true })
   created_at?: Date

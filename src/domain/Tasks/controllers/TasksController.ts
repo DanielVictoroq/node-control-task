@@ -19,11 +19,9 @@ export class TasksController {
 
   async parseReqFetch(req: Request): Promise<findOptions> {
     let relations = new Array(0)
-    if (req.body.relations) {
-      relations = req.body.relations.split(',')
-
+    if (req.query.relations) {
+      relations = req.query.relations.toString().split(',')
     }
-    console.log(relations)
     const { where, order, take } = req.body
     return { relations, where, order, take }
   }
