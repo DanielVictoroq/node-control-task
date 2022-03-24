@@ -1,4 +1,5 @@
 import { ITask } from '@/domain/Tasks'
+import { UpdateResult } from 'typeorm'
 
 export class Task implements ITask {
 
@@ -17,20 +18,19 @@ export class Task implements ITask {
 }
 
 export type returnDataTasks = {
-  task?: Task,
-  tasks?: Array<Task>
+  status: number,
+  task?: Task | UpdateResult,
+  tasks?: Task[] | UpdateResult,
+  message?: string
 }
 
-
-export type relationsFields = ['type_task_id', 'debt_id', 'credit_id', 'user_id']
-export type relationsValuesFields = 'type_task_id' | 'debt_id' | 'credit_id' | 'user_id'
-
 export const filterFields = ['name', 'description']
+
 export type filter = {
   [key in typeof filterFields[number]]?: string
 }
 
-export const orderFields = ['document', 'site', 'name', 'businessName', 'createdAt', 'updatadAt']
+export const orderFields = ['name', 'type_task_id']
 type orderDirection = 'ASC' | 'DESC'
 
 export type orderValue = {

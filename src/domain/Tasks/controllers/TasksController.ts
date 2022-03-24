@@ -1,7 +1,6 @@
 import { TaskService } from '@/domain/Tasks'
-import { findOptions } from '@/domain/Utils'
 import { Request } from 'express'
-import { returnDataTasks } from '../model'
+import { filter, orderValue, returnDataTasks, Task } from '../model'
 
 export class TasksController {
   private task: TaskService
@@ -11,18 +10,58 @@ export class TasksController {
   }
 
   async fetch(req: Request): Promise<returnDataTasks> {
-
-    const { relations, where, order, take } = await this.parseReqFetch(req)
-
-    return await this.task.fetch(relations, where, order, take)
+    const { filters, order, itemsPerPage } = await this.parseFetchItens(req)
+    return await this.task.fetch(filters, order, itemsPerPage)
   }
 
-  async parseReqFetch(req: Request): Promise<findOptions> {
-    let relations = new Array(0)
-    if (req.query.relations) {
-      relations = req.query.relations.toString().split(',')
+  async parseFetchItens(req: Request): Promise<{ filters: filter, order: orderValue, itemsPerPage: number }> {
+    let itemsPerPage = 100
+    itemsPerPage = req.body.itemsPerPage ? req.body.itemsPerPage : itemsPerPage
+    const { order, filters } = req.body
+    return { filters, order, itemsPerPage }
+  }
+
+  async create(req: Request): Promise<returnDataTasks> {
+    const task = new Task()
+    task.name = req.body.name
+    task.description = req.body.description
+    task.dt_task = req.body.dt_task
+    task.type_task_id = req.body.type_task_id
+    task.debt_id = req.body.debt_id
+    task.credit_id = req.body.credit_id
+    task.user_id = req.body.user_id
+    task.created_at = new Date()
+
+    return await this.task.create(task)
+  }
+
+  async update(req: Request): Promise<returnDataTasks> {
+    const id = parseInt(req.params.id)
+
+    if (isNaN(id)) {
+      return { status: 500, message: 'Houve um problema ao efetuar a atualização' }
     }
-    const { where, order, take } = req.body
-    return { relations, where, order, take }
+
+    if (Object.keys(req.body).length === 0) {
+      return { status: 401, message: 'Não informado nenhum dado para ser atualizado' }
+    }
+
+    const task = new Task()
+    task.name = req.body.name ?? req.body.name
+    task.description = req.body.description ?? req.body.description
+    task.dt_task = req.body.dt_task ?? req.body.dt_task
+    task.type_task_id = req.body.type_task_id ? parseInt(req.body.type_task_id) : undefined
+    task.credit_id = req.body.credit_id ? parseInt(req.body.credit_id) : undefined
+    task.debt_id = req.body.debt_id ? parseInt(req.body.debt_id) : undefined
+    task.user_id = req.body.user_id ? parseInt(req.body.user_id) : undefined
+    task.updated_at = new Date()
+
+    return await this.task.update(id, task)
   }
+
+  async delete(req: Request): Promise<returnDataTasks> {
+    const id = parseInt(req.params.id)
+    return await this.task.delete(id)
+  }
+
 }

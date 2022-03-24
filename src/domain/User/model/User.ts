@@ -17,7 +17,7 @@ export class User implements IUser {
 
 export type returnDataUsers = {
   user?: User,
-  users?: Array<User>
+  users?: User[]
 }
 
 export type returnToken = {

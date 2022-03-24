@@ -4,8 +4,6 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne,
-  OneToMany,
   ManyToOne,
 } from 'typeorm'
 import { Types } from './Types'

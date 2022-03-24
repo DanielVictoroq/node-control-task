@@ -1,5 +1,5 @@
 import { CustomHelpers, ErrorReport } from 'joi'
-import { filter, orderValue, relationsValuesFields } from '../Tasks'
+import { filter, orderValue} from '../Tasks'
 
 export const documentValidate = <T extends string>(document: T, helpers: CustomHelpers): T | ErrorReport => {
   let sum = 0
@@ -25,7 +25,6 @@ export const documentValidate = <T extends string>(document: T, helpers: CustomH
 
 export type findOptions = {
   where?: filter
-  relations?: Array<string>
   order?: orderValue
   take?: number
 }

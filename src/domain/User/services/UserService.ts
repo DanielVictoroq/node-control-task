@@ -18,7 +18,6 @@ export class UserService {
     if (userLogin.user) return res.status(401).json({ message: 'Usuário utilizado já existe' })
     if (userEmail.user) return res.status(401).json({ message: 'E-mail já utilizado em nossa base de dados' })
     try {
-
       const userCreate = await this.userRepo.create(user)
       return res.status(200).json(userCreate)
     } catch (err) {
