@@ -1,12 +1,30 @@
+import { Debt } from '../model'
+
 export interface IDebt {
-  _title: string;
-  _description: string;
-  _dt_task: Date;
-  _type_task_id: number;
-  _debt_id: number;
-  _credt_id: number;
-  _user_id: number;
-  _created_at: Date;
-  _updated_at: Date;
-  _deleted_at: Date;
+  id?: number,
+  title?: string,
+  description?: string,
+  value?: number,
+  dt_debt?: Date,
+  qtd_plots?: number,
+  type_debts_id?: number,
+  user_id?: number,
+  created_at?: Date,
+  updated_at?: Date,
+}
+
+
+export function makeDebt(input: IDebt): Debt {
+  return new Debt(
+    input?.id,
+    input?.title,
+    input?.description,
+    input?.value,
+    input?.dt_debt,
+    input?.qtd_plots,
+    input?.type_debts_id,
+    input?.user_id,
+    input?.created_at,
+    input?.updated_at,
+  )
 }

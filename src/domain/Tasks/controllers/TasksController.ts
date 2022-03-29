@@ -1,6 +1,7 @@
 import { TaskService } from '@/domain/Tasks'
+import { returnData } from '@/domain/Utils'
 import { Request } from 'express'
-import { filter, orderValue, returnDataTasks, Task } from '../model'
+import { filter, orderValue, Task } from '../model'
 
 export class TasksController {
   private task: TaskService
@@ -9,7 +10,7 @@ export class TasksController {
     this.task = task
   }
 
-  async fetch(req: Request): Promise<returnDataTasks> {
+  async fetch(req: Request): Promise<returnData> {
     const { filters, order, itemsPerPage } = await this.parseFetchItens(req)
     return await this.task.fetch(filters, order, itemsPerPage)
   }
@@ -21,7 +22,7 @@ export class TasksController {
     return { filters, order, itemsPerPage }
   }
 
-  async create(req: Request): Promise<returnDataTasks> {
+  async create(req: Request): Promise<returnData> {
     const task = new Task()
     task.name = req.body.name
     task.description = req.body.description
@@ -35,7 +36,7 @@ export class TasksController {
     return await this.task.create(task)
   }
 
-  async update(req: Request): Promise<returnDataTasks> {
+  async update(req: Request): Promise<returnData> {
     const id = parseInt(req.params.id)
 
     if (isNaN(id)) {
@@ -59,8 +60,13 @@ export class TasksController {
     return await this.task.update(id, task)
   }
 
-  async delete(req: Request): Promise<returnDataTasks> {
+  async delete(req: Request): Promise<returnData> {
     const id = parseInt(req.params.id)
+
+    if (isNaN(id)) {
+      return { status: 500, message: 'Houve um problema ao deletar a tarefa' }
+    }
+
     return await this.task.delete(id)
   }
 

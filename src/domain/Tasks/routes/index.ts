@@ -13,13 +13,18 @@ export function routesTasks(
   })
 
   router.post('/', ApiMiddleware, TaskCreateValidate, async (req: Request, res: Response) => {
-    const {status, message, task, tasks} = await tasksController.create(req)
-    return res.status(status).json({message, task, tasks})
+    const { status, message, entity } = await tasksController.create(req)
+    return res.status(status).json({ message, entity })
   })
 
   router.put('/:id', ApiMiddleware, TaskUpdateValidate, async (req: Request, res: Response) => {
-    const {status, message, task, tasks} = await tasksController.update(req)
-    return res.status(status).json({message, task, tasks})
+    const { status, message, entity } = await tasksController.update(req)
+    return res.status(status).json({ message, entity })
+  })
+
+  router.delete('/:id', ApiMiddleware, TaskUpdateValidate, async (req: Request, res: Response) => {
+    const { status, message, entity } = await tasksController.delete(req)
+    return res.status(status).json({ message, entity })
   })
 
   return router

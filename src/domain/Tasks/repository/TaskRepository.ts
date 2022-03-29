@@ -2,10 +2,9 @@ import { Tasks } from '@/database/entity'
 import {
   ITask,
   makeTask,
-  returnDataTasks,
 } from '@/domain/Tasks'
-import { findOptions } from '@/domain/Utils'
-import { DeepPartial, SelectQueryBuilder, UpdateResult } from 'typeorm'
+import { findOptions, returnData } from '@/domain/Utils'
+import { DeepPartial, DeleteResult, SelectQueryBuilder, UpdateResult } from 'typeorm'
 import { filter, orderValue, Task } from '../model'
 
 interface IDatabaseEntity {
@@ -15,6 +14,7 @@ interface IDatabaseEntity {
   save(options?: Task): Promise<Task>
   update(id: number, alias: DeepPartial<Tasks>): Promise<UpdateResult>
   createQueryBuilder(alias?: string): SelectQueryBuilder<Tasks>
+  delete(id: number): Promise<DeleteResult>
 }
 
 interface ITaskRepository {
@@ -23,10 +23,10 @@ interface ITaskRepository {
     order?: orderValue,
     page?: number,
     itemsPerPage?: number,
-  ): Promise<returnDataTasks>
-  create(tasks: Task): Promise<returnDataTasks>
-  update(id: number, options: Task): Promise<returnDataTasks>
-  delete(id: number): Promise<returnDataTasks>
+  ): Promise<returnData>
+  create(tasks: Task): Promise<returnData>
+  update(id: number, options: Task): Promise<returnData>
+  delete(id: number): Promise<returnData>
 }
 export class TaskRepository implements ITaskRepository {
   private database: IDatabaseEntity
@@ -39,22 +39,21 @@ export class TaskRepository implements ITaskRepository {
     filters?: filter,
     order?: orderValue,
     itemsPerPage?: number,
-  ): Promise<returnDataTasks> {
-    console.log({ where: filters, order, take: itemsPerPage })
+  ): Promise<returnData> {
     const [findtask] = await this.database.findAndCount({ where: filters, order, take: itemsPerPage })
-    const tasks = new Array(findtask.length)
+    const task = new Array(findtask.length)
 
     for (let i = 0; i < findtask.length; i++) {
-      tasks[i] = makeTask(findtask[i] as ITask)
+      task[i] = makeTask(findtask[i] as ITask)
     }
-    return { status: 200, tasks }
+    return { status: 200, entity: task }
   }
 
-  async create(tasks: Task): Promise<returnDataTasks> {
-    return { status: 200, task: await this.database.save(tasks) }
+  async create(tasks: Task): Promise<returnData> {
+    return { status: 200, entity: await this.database.save(tasks) }
   }
 
-  async update(id: number, data: Task): Promise<returnDataTasks> {
+  async update(id: number, data: Task): Promise<returnData> {
     const updateTask = this.database.create({
       name: data?.name,
       debt_id: data?.debt_id,
@@ -65,10 +64,10 @@ export class TaskRepository implements ITaskRepository {
       updated_at: data?.updated_at,
     })
 
-    return { status: 200, task: await this.database.update(id, updateTask) }
+    return { status: 200, entity: await this.database.update(id, updateTask) }
   }
 
-  async delete(id: number): Promise<returnDataTasks> {
-    return { status: 200 }
+  async delete(id: number): Promise<returnData> {
+    return { status: 200, entity: await this.database.delete(id) }
   }
 }

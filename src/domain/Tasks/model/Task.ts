@@ -17,14 +17,7 @@ export class Task implements ITask {
   ) { }
 }
 
-export type returnDataTasks = {
-  status: number,
-  task?: Task | UpdateResult,
-  tasks?: Task[] | UpdateResult,
-  message?: string
-}
-
-export const filterFields = ['name', 'description']
+export const filterFields = ['name', 'description', 'debt_id']
 
 export type filter = {
   [key in typeof filterFields[number]]?: string
