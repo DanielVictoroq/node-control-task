@@ -30,40 +30,28 @@ export class DebtsService implements IDebtService {
   }
 
   async create(debtModel: Debt): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.debtsRepo.create(debtModel)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 500, message: 'Houve um problema ao criar a tarefa' }
     }
   }
 
   async update(id: number, debtModel: Debt): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.debtsRepo.update(id, debtModel)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 422, message: 'Houve um problema ao atualizar a tarefa' }
     }
   }
 
   async delete(id: number): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.debtsRepo.delete(id)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 422, message: 'Houve um problema ao deletar a tarefa' }
     }
   }

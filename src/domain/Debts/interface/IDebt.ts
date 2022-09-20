@@ -13,7 +13,6 @@ export interface IDebt {
   updated_at?: Date,
 }
 
-
 export function makeDebt(input: IDebt): Debt {
   return new Debt(
     input?.id,
