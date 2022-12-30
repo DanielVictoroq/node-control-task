@@ -1,7 +1,5 @@
 import { filterDebt, DebtsRepository, Debt, orderDebtValue } from '@/domain/Debts'
 import { findOptions, returnData } from '@/domain/Utils'
-import { getConnection } from 'typeorm'
-// import { orderValue, Task } from '../model'
 
 interface IDebtService {
   fetch(options?: findOptions): Promise<returnData>
@@ -34,7 +32,7 @@ export class DebtsService implements IDebtService {
       const { status, message, entity } = await this.debtsRepo.create(debtModel)
       return { status, message, entity }
     } catch (err) {
-      return { status: 500, message: 'Houve um problema ao criar a tarefa' }
+      return { status: 500, message: (err as Error).message }
     }
   }
 
@@ -43,7 +41,7 @@ export class DebtsService implements IDebtService {
       const { status, message, entity } = await this.debtsRepo.update(id, debtModel)
       return { status, message, entity }
     } catch (err) {
-      return { status: 422, message: 'Houve um problema ao atualizar a tarefa' }
+      return { status: 422, message: (err as Error).message }
     }
   }
 
@@ -52,7 +50,7 @@ export class DebtsService implements IDebtService {
       const { status, message, entity } = await this.debtsRepo.delete(id)
       return { status, message, entity }
     } catch (err) {
-      return { status: 422, message: 'Houve um problema ao deletar a tarefa' }
+      return { status: 422, message: (err as Error).message }
     }
   }
 }

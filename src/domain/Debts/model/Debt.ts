@@ -4,12 +4,12 @@ export class Debt {
     public title?: string,
     public description?: string,
     public value?: number,
-    public dt_debt?: Date,
-    public qtd_plots?: number,
-    public type_debts_id?: number,
-    public user_id?: number,
-    public created_at?: Date,
-    public updated_at?: Date,
+    public dtDebt?: Date,
+    public qtdPlots?: number,
+    public typeDebtsId?: number,
+    public userId?: number,
+    public createdAt?: Date,
+    public updatedAt?: Date,
   ) { }
 }
 

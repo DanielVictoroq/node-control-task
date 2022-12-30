@@ -1,7 +1,6 @@
-import { TaskService } from '@/domain/Tasks'
+import { TaskService, filter, orderValue, Task } from '@/domain/Tasks'
 import { returnData } from '@/domain/Utils'
 import { Request } from 'express'
-import { filter, orderValue, Task } from '../model'
 
 export class TasksController {
   private task: TaskService
@@ -23,16 +22,16 @@ export class TasksController {
   }
 
   async create(req: Request): Promise<returnData> {
-    const task = new Task()
-    task.name = req.body.name
-    task.description = req.body.description
-    task.dt_task = req.body.dt_task
-    task.type_task_id = req.body.type_task_id
-    task.debt_id = req.body.debt_id
-    task.credit_id = req.body.credit_id
-    task.user_id = req.body.user_id
-    task.created_at = new Date()
-
+    const task = new Task(
+      req.body.name,
+      req.body.description,
+      req.body.dt_task,
+      req.body.type_task_id,
+      req.body.debt_id,
+      req.body.credit_id,
+      req.body.user_id,
+      new Date(),
+    )
     return await this.task.create(task)
   }
 

@@ -1,6 +1,5 @@
 import { filter, TaskRepository } from '@/domain/Tasks'
 import { findOptions, returnData } from '@/domain/Utils'
-import { getConnection } from 'typeorm'
 import { orderValue, Task } from '../model'
 
 interface ITaskService {

@@ -41,13 +41,13 @@ export class DebtsRepository {
   async update(id: number, data: Debt): Promise<returnData> {
     const updateDebt = this.database.create({
       title: data?.title,
-      dt_debt: data?.dt_debt,
+      dtDebt: data?.dtDebt,
       description: data?.description,
       value: data?.value,
-      qtd_plots: data?.qtd_plots,
-      type_debts_id: data?.type_debts_id,
-      user_id: data?.user_id,
-      updated_at: data?.updated_at,
+      qtdPlots: data?.qtdPlots,
+      typeDebtsId: data?.typeDebtsId,
+      userId: data?.userId,
+      updatedAt: data?.updatedAt,
     })
 
     return { status: 200, entity: await this.database.update(id, updateDebt) }
