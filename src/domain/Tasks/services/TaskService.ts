@@ -30,40 +30,28 @@ export class TaskService implements ITaskService {
   }
 
   async create(taskModel: Task): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.taskRepo.create(taskModel)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 500, message: 'Houve um problema ao criar a tarefa' }
     }
   }
 
   async update(id: number, taskModel: Task): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.taskRepo.update(id, taskModel)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 422, message: 'Houve um problema ao atualizar a tarefa' }
     }
   }
 
   async delete(id: number): Promise<returnData> {
-    const connection = getConnection()
     try {
-      await connection.query('START TRANSACTION;')
       const { status, message, entity } = await this.taskRepo.delete(id)
-      await connection.query('COMMIT;')
       return { status, message, entity }
     } catch (err) {
-      await connection.query('ROLLBACK;')
       return { status: 422, message: 'Houve um problema ao deletar a tarefa' }
     }
   }

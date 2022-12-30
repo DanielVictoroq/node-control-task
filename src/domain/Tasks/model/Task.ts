@@ -1,10 +1,8 @@
 import { ITask } from '@/domain/Tasks'
-import { UpdateResult } from 'typeorm'
 
 export class Task implements ITask {
 
   constructor(
-    public id?: number,
     public name?: string,
     public description?: string,
     public dt_task?: Date,
@@ -14,6 +12,7 @@ export class Task implements ITask {
     public user_id?: number,
     public created_at?: Date,
     public updated_at?: Date,
+    public id?: number,
   ) { }
 }
 

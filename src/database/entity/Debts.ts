@@ -24,24 +24,24 @@ export class Debts extends BaseEntity {
   @Column('decimal', { precision: 11, scale: 2 })
   value?: number
 
-  @Column()
-  dt_debt?: Date
+  @Column({ name: 'dt_debt' })
+  dtDebt?: Date
 
-  @Column({ nullable: true })
-  qtd_plots?: number
+  @Column({ name: 'qtd_plots', nullable: true })
+  qtdPlots?: number
 
   @ManyToOne(() => Types, type => type.id)
-  @JoinColumn({name: 'type_debts_id'})
-  type_debts_id?: Types
+  @JoinColumn({ name: 'type_debts_id' })
+  typeDebtsId?: Types
 
   @ManyToOne(() => Users, users => users.id)
-  @JoinColumn({name: 'user_id'})
-  user_id?: Users
+  @JoinColumn({ name: 'user_id' })
+  userId?: Users
 
-  @Column({ nullable: true })
-  created_at?: Date
+  @Column({ name: 'created_at', nullable: true })
+  createdAt?: Date
 
-  @Column({ nullable: true, default: new Date() })
-  updated_at?: Date
+  @Column({ name: 'updated_at', nullable: true, default: new Date() })
+  updatedAt?: Date
 
 }

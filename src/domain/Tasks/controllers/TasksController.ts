@@ -47,16 +47,16 @@ export class TasksController {
       return { status: 401, message: 'Não informado nenhum dado para ser atualizado' }
     }
 
-    const task = new Task()
-    task.name = req.body.name ?? req.body.name
-    task.description = req.body.description ?? req.body.description
-    task.dt_task = req.body.dt_task ?? req.body.dt_task
-    task.type_task_id = req.body.type_task_id ? parseInt(req.body.type_task_id) : undefined
-    task.credit_id = req.body.credit_id ? parseInt(req.body.credit_id) : undefined
-    task.debt_id = req.body.debt_id ? parseInt(req.body.debt_id) : undefined
-    task.user_id = req.body.user_id ? parseInt(req.body.user_id) : undefined
-    task.updated_at = new Date()
-
+    const task = new Task(
+      req.body.name ?? req.body.name,
+      req.body.description ?? req.body.description,
+      req.body.dt_task ?? req.body.dt_task,
+      req.body.type_task_id ? parseInt(req.body.type_task_id) : undefined,
+      req.body.credit_id ? parseInt(req.body.credit_id) : undefined,
+      req.body.debt_id ? parseInt(req.body.debt_id) : undefined,
+      req.body.user_id ? parseInt(req.body.user_id) : undefined,
+      new Date(),
+    )
     return await this.task.update(id, task)
   }
 
