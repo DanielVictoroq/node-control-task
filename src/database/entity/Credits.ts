@@ -25,24 +25,24 @@ export class Credits extends BaseEntity {
   @Column('decimal', { precision: 11, scale: 2 })
   value?: number
 
-  @Column()
-  dt_credit?: Date
+  @Column({name: 'dt_credit'})
+  dtCredit?: Date
 
   @Column({ nullable: true })
-  qtd_repeat?: number
+  qtdRepeat?: number
 
   @ManyToOne(() => Types, type => type.id)
   @JoinColumn({name: 'type_credits_id'})
-  type_credits_id?: Types
+  typeCreditsId?: Types
 
   @ManyToOne(() => Users, users => users.id)
   @JoinColumn({name: 'user_id'})
-  user_id?: Users
+  userId?: Users
 
   @Column({ nullable: true })
-  created_at?: Date
+  createdAt?: Date
 
   @Column({ nullable: true, default: new Date() })
-  updated_at?: Date
+  updatedAt?: Date
 
 }
