@@ -27,19 +27,17 @@ export class DebtsService implements IDebtService {
     )
   }
 
-  async create(debtModel: Debt): Promise<returnData> {
+  async create(debtModel: Record<string, unknown>): Promise<returnData> {
     try {
-      const { status, message, entity } = await this.debtsRepo.create(debtModel)
-      return { status, message, entity }
+      return await this.debtsRepo.create(debtModel)
     } catch (err) {
       return { status: 500, message: (err as Error).message }
     }
   }
 
-  async update(id: number, debtModel: Debt): Promise<returnData> {
+  async update(id: number, debtModel: object): Promise<returnData> {
     try {
-      const { status, message, entity } = await this.debtsRepo.update(id, debtModel)
-      return { status, message, entity }
+      return await this.debtsRepo.update(id, debtModel)
     } catch (err) {
       return { status: 422, message: (err as Error).message }
     }
@@ -47,8 +45,7 @@ export class DebtsService implements IDebtService {
 
   async delete(id: number): Promise<returnData> {
     try {
-      const { status, message, entity } = await this.debtsRepo.delete(id)
-      return { status, message, entity }
+      return await this.debtsRepo.delete(id)
     } catch (err) {
       return { status: 422, message: (err as Error).message }
     }

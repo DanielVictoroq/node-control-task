@@ -1,3 +1,4 @@
+import { Task } from '@/domain/Tasks'
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,7 +9,7 @@ import {
 import { ScheduleFinancials } from './ScheduleFinancials'
 import { Tasks } from './Tasks'
 
-@Entity()
+@Entity('users')
 export class Users extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -30,7 +31,7 @@ export class Users extends BaseEntity {
   email?: string
 
   @OneToMany(() => Tasks, tasks => tasks.user_id)
-  tasks?: Tasks[]
+  tasks?: Task[]
 
   @OneToMany(() => ScheduleFinancials, schedule => schedule.user_id)
   schedules?: ScheduleFinancials[]

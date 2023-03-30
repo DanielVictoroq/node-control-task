@@ -1,10 +1,11 @@
+import { Type } from '@/domain/Types'
+import { User } from '@/domain/User'
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
   JoinColumn,
-  OneToMany,
   ManyToOne,
 } from 'typeorm'
 import { Types } from './Types'
@@ -33,11 +34,11 @@ export class Credits extends BaseEntity {
 
   @ManyToOne(() => Types, type => type.id)
   @JoinColumn({name: 'type_credits_id'})
-  typeCreditsId?: Types
+  typeCreditsId?: Type
 
   @ManyToOne(() => Users, users => users.id)
   @JoinColumn({name: 'user_id'})
-  userId?: Users
+  userId?: User
 
   @Column({ nullable: true })
   createdAt?: Date

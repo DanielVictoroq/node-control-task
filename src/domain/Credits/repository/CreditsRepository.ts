@@ -1,31 +1,24 @@
-import { Tasks } from '@/database/entity'
-import { findOptions, returnData } from '@/domain/Utils'
-import { ICredit, makeCredit } from '../interface'
-import { filterCredit, orderCreditValue } from '../model/Credit'
+import { returnData } from '@/domain/Utils'
+import { filterCredit, orderCreditValue, makeCredit, Credit } from '@/domain/Credits'
+import { defaultDataSource, Credits as CreditsOrm } from '@/database'
 
-interface IDatabaseEntity {
-  findOne(id: number): Promise<Tasks>
-  findAndCount(options?: findOptions): Promise<[unknown[], number]>
+interface ICreditsRepository {
+  fetch(filters?: filterCredit, order?: orderCreditValue, itemsPerPage?: number): Promise<returnData>
 }
 
-export class CreditsRepository {
-  private database: IDatabaseEntity
-
-  constructor(database: IDatabaseEntity) {
-    this.database = database
-  }
+export class CreditsRepository implements ICreditsRepository {
 
   async fetch(
     filters?: filterCredit,
     order?: orderCreditValue,
     itemsPerPage?: number,
   ): Promise<returnData> {
-    const [findCredit] = await this.database.findAndCount({ where: filters, order, take: itemsPerPage })
-    const credit = new Array(findCredit.length)
+    const [findCredit] = await defaultDataSource.manager.findAndCount(CreditsOrm, { where: filters, order, take: itemsPerPage })
+    const credits: Credit[] = []
 
-    for (let i = 0; i < findCredit.length; i++) {
-      credit[i] = makeCredit(findCredit[i] as ICredit)
-    }
-    return { status: 200, entity: credit }
+    findCredit.forEach((credit: CreditsOrm) => {
+      credits.push(makeCredit(credit))
+    })
+    return { status: 200, entity: credits }
   }
 }

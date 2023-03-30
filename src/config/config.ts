@@ -1,6 +1,5 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { createConnection } from 'typeorm'
 import { LoginController, UserController, routesUsers } from '@/domain/User'
 import { CreditsController, routesCredits } from '@/domain/Credits'
 import { DebtsController, routesDebts } from '@/domain/Debts'
@@ -35,5 +34,4 @@ export async function configRoutesFunction(
   const server = createServer(app)
   server.listen(3000, () => console.log(`Connected!! ${port}`))
 
-  createConnection()
 }

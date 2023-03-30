@@ -10,7 +10,7 @@ export class UserController {
     this.userService = userService
   }
 
-  async find(req: Request): Promise<returnDataUsers> {
+  async find(req: Request): Promise<returnDataUsers | undefined> {
     const id = parseInt(req.params?.id)
     return await this.userService.find(id)
   }

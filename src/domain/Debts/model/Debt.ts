@@ -1,3 +1,20 @@
+import { Debts } from '@/database'
+import { Type } from '@/domain/Types'
+import { User } from '@/domain/User'
+
+export interface IDebt {
+  id?: number,
+  title?: string,
+  description?: string,
+  value?: number,
+  dtDebt?: Date,
+  qtdPlots?: number,
+  typeDebtsId?: number,
+  userId?: number,
+  createdAt?: Date,
+  updatedAt?: Date,
+}
+
 export class Debt {
   constructor(
     public id?: number,
@@ -6,8 +23,8 @@ export class Debt {
     public value?: number,
     public dtDebt?: Date,
     public qtdPlots?: number,
-    public typeDebtsId?: number,
-    public userId?: number,
+    public typeDebtsId?: Type,
+    public userId?: User,
     public createdAt?: Date,
     public updatedAt?: Date,
   ) { }
@@ -24,4 +41,19 @@ type orderDirection = 'ASC' | 'DESC'
 
 export type orderDebtValue = {
   [key in typeof orderDebtFields[number]]?: orderDirection
+}
+
+export function makeDebt(input: Debts): Debt {
+  return new Debt(
+    input?.id,
+    input?.title,
+    input?.description,
+    input?.value,
+    input?.dtDebt,
+    input?.qtdPlots,
+    input?.typeDebtsId,
+    input?.userId,
+    input?.createdAt,
+    input?.updatedAt,
+  )
 }

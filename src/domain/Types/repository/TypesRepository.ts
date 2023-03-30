@@ -1,35 +1,25 @@
-import { Types } from '@/database/entity'
-import { IType, makeTypes, returnDataTypes } from '@/domain/Types'
+import { defaultDataSource, Types as TypesOrm } from '@/database'
+import { IType, makeTypes, returnDataTypes, filterType, orderTypeValue } from '@/domain/Types'
 
-type findOptions = {
-  relations?: string[]
+interface ITypesRepository {
+  fetch(filters?: filterType, order?: orderTypeValue, itemsPerPage?: number): Promise<returnDataTypes>
 }
 
-interface IDatabaseEntity {
-  findOne(id: number): Promise<Types>
-  findAndCount(options?: findOptions): Promise<[unknown[], number]>
-}
+export class TypesRepository implements ITypesRepository {
 
-export class TypesRepository {
-  private database: IDatabaseEntity
-
-  constructor(database: IDatabaseEntity) {
-    this.database = database
-  }
-
-  async list(res?: unknown): Promise<returnDataTypes> {
-
-    const [dataFind] = await this.database.findAndCount({ relations: ['aux_types_id'] })
+  async fetch(filters?: filterType, order?: orderTypeValue, itemsPerPage?: number): Promise<returnDataTypes> {
+    const [dataFind, total] = await defaultDataSource.manager.findAndCount(TypesOrm, {
+      where: filters,
+      order,
+      take: itemsPerPage,
+      relations: ['aux_types_id'],
+    })
 
     const data = new Array(dataFind.length)
 
     for (let i = 0; i < dataFind.length; i++) {
-      data[i] = makeTypes(dataFind[i] as IType)
+      data[i] = makeTypes(dataFind[i] as unknown as IType)
     }
-    return { data }
-  }
-
-  async insereTipo(res: any, bodyReq: any) {
-    return await this.database.findAndCount()
+    return { data, total }
   }
 }

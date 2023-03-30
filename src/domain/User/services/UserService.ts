@@ -8,8 +8,9 @@ export class UserService {
     this.userRepo = userRepo
   }
 
-  async find(user_id: number ): Promise<returnDataUsers> {
-    return await this.userRepo.find(user_id)
+  async find(user_id: number): Promise<returnDataUsers | undefined> {
+    const find = await this.userRepo.find(user_id)
+    if (find) return find
   }
 
   async create(user: User, res: Response): Promise<Response> {

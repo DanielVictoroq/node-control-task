@@ -1,22 +1,10 @@
-import { Tasks } from '@/database/entity'
 import {
   ITask,
   makeTask,
 } from '@/domain/Tasks'
-import { findOptions, returnData } from '@/domain/Utils'
-import { DeepPartial, DeleteResult, SelectQueryBuilder, UpdateResult } from 'typeorm'
+import { returnData } from '@/domain/Utils'
 import { filter, orderValue, Task } from '../model'
-
-interface IDatabaseEntity {
-  findOne(id: number): Promise<Tasks>
-  findAndCount(options: findOptions): Promise<[unknown[], number]>
-  create(entityLike: DeepPartial<Task>): Tasks;
-  save(options?: Task): Promise<Task>
-  update(id: number, alias: DeepPartial<Tasks>): Promise<UpdateResult>
-  createQueryBuilder(alias?: string): SelectQueryBuilder<Tasks>
-  delete(id: number): Promise<DeleteResult>
-}
-
+import { defaultDataSource, Tasks as TasksOrm } from '@/database'
 interface ITaskRepository {
   fetch(
     filters?: filter,
@@ -29,18 +17,13 @@ interface ITaskRepository {
   delete(id: number): Promise<returnData>
 }
 export class TaskRepository implements ITaskRepository {
-  private database: IDatabaseEntity
-
-  constructor(database: IDatabaseEntity) {
-    this.database = database
-  }
 
   async fetch(
     filters?: filter,
     order?: orderValue,
     itemsPerPage?: number,
   ): Promise<returnData> {
-    const [findtask] = await this.database.findAndCount({ where: filters, order, take: itemsPerPage })
+    const [findtask] = await defaultDataSource.manager.findAndCount(TasksOrm, { where: filters, order, take: itemsPerPage })
     const task = new Array(findtask.length)
 
     for (let i = 0; i < findtask.length; i++) {
@@ -50,24 +33,23 @@ export class TaskRepository implements ITaskRepository {
   }
 
   async create(tasks: Task): Promise<returnData> {
-    return { status: 200, entity: await this.database.save(tasks) }
+    const entity: TasksOrm = Object.assign(new TasksOrm(), { ...tasks, id: undefined })
+    await defaultDataSource.manager
+      .createQueryBuilder()
+      .insert()
+      .into(TasksOrm)
+      .values(entity)
+      .execute()
+    return { status: 200, entity: await defaultDataSource.manager.save(tasks) }
+
   }
 
-  async update(id: number, data: Task): Promise<returnData> {
-    const updateTask = this.database.create({
-      name: data?.name,
-      debt_id: data?.debt_id,
-      description: data?.description,
-      credit_id: data?.credit_id,
-      dt_task: data?.dt_task,
-      type_task_id: data?.type_task_id,
-      updated_at: data?.updated_at,
-    })
-
-    return { status: 200, entity: await this.database.update(id, updateTask) }
+  async update(id: number, tasks: Task): Promise<returnData> {
+    const entity: TasksOrm = Object.assign(new TasksOrm(), { ...tasks, id: undefined })
+    return { status: 200, entity: await defaultDataSource.manager.update(TasksOrm, id, entity) }
   }
 
   async delete(id: number): Promise<returnData> {
-    return { status: 200, entity: await this.database.delete(id) }
+    return { status: 200, entity: await defaultDataSource.manager.delete(TasksOrm, id) }
   }
 }

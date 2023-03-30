@@ -1,5 +1,16 @@
-import { ScheduleFinancials, Tasks } from '@/database/entity'
-import { IUser } from '@/domain/User'
+import { ScheduleFinancials, Users } from '@/database/entity'
+import { Task } from '@/domain/Tasks'
+
+export interface IUser {
+  id?: number
+  name?: string
+  login?: string
+  password?: string
+  document?: string
+  email?: string
+  tasks?: Task[],
+  schedules?: ScheduleFinancials[],
+}
 
 export class User implements IUser {
 
@@ -10,8 +21,8 @@ export class User implements IUser {
     public password?: string,
     public document?: string,
     public email?: string,
-    public tasks?: Tasks,
-    public schedules?: ScheduleFinancials,
+    public tasks?: Task[],
+    public schedules?: ScheduleFinancials[],
   ) { }
 }
 
@@ -29,7 +40,7 @@ export type returnTokenData = {
   message?: string
 }
 
-export function makeUser(input: IUser): User {
+export function makeUser(input: Users): User {
   const user = new User(
     input?.id,
     input?.name,

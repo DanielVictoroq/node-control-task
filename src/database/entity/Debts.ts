@@ -1,3 +1,4 @@
+import { Type } from '@/domain/Types'
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -32,7 +33,7 @@ export class Debts extends BaseEntity {
 
   @ManyToOne(() => Types, type => type.id)
   @JoinColumn({ name: 'type_debts_id' })
-  typeDebtsId?: Types
+  typeDebtsId?: Type
 
   @ManyToOne(() => Users, users => users.id)
   @JoinColumn({ name: 'user_id' })

@@ -1,40 +1,34 @@
-import { makeUser, returnDataUsers, IUser } from '@/domain/User'
-import { Users } from '@/database/entity'
-import { User } from '../model'
-import { findOptions } from '@/domain/Utils'
+import { defaultDataSource, Users } from '@/database'
+import { makeUser, returnDataUsers, User } from '@/domain/User'
 
-interface IDatabaseEntity {
-  findOne(id: number, options?: findOptions): Promise<Users>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  find(options?: findOptions): Promise<any>
-  create(options?: User): Promise<User>
-  save(options?: User): Promise<User>
+interface IUserRepository {
+  find(userId: number): Promise<returnDataUsers | undefined>
+  create(user: User): Promise<returnDataUsers>
+  findCustom(data: object): Promise<returnDataUsers>
 }
 
-export class UserRepository {
-  private database: IDatabaseEntity
+export class UserRepository implements IUserRepository {
 
-  constructor(database: IDatabaseEntity) {
-    this.database = database
-  }
+  async find(userId: number): Promise<returnDataUsers | undefined> {
+    const datFind = await defaultDataSource.manager.findOne(Users, {
+      where: { id: userId },
+    })
 
-  async find(user_id: number): Promise<returnDataUsers> {
-    const datFind = await this.database.findOne(user_id)
-    return { user: makeUser(datFind as IUser) }
+    if (datFind) {
+      return { user: makeUser(datFind) }
+    }
+    return undefined
   }
 
   async create(user: User): Promise<returnDataUsers> {
-    return { user: await this.database.save(user) }
+    const entity: Users = Object.assign(new Users(), { ...user, id: undefined })
+    return { user: await defaultDataSource.manager.save(entity) }
   }
 
   async findCustom(data: object): Promise<returnDataUsers> {
-    const datFind = await this.database.find({ where: data })
-    const arrUser = new Array(datFind.length)
-
-    for (let i = 0; i < datFind.length; i++) {
-      arrUser[i] = makeUser(datFind[i] as IUser)
-    }
-
-    return { user: arrUser[0], users: arrUser }
+    const users = await defaultDataSource.manager.find(Users, { where: { ...data } })
+    const result: User[] = []
+    users.forEach((user) => result.push(makeUser(user)))
+    return { user: result[0], users: result }
   }
 }

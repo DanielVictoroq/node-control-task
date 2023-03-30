@@ -1,11 +1,9 @@
-import { Debt, DebtsService, filterDebt, orderDebtValue } from '@/domain/Debts'
+import { DebtsService, filterDebt, orderDebtValue } from '@/domain/Debts'
 import { returnData } from '@/domain/Utils'
 import { Request } from 'express'
 
 export class DebtsController {
-  private debts: DebtsService
-
-  constructor(debts: DebtsService) {
+  constructor(private debts: DebtsService) {
     this.debts = debts
   }
 
@@ -22,18 +20,15 @@ export class DebtsController {
   }
 
   async create(req: Request): Promise<returnData> {
-    const dbt = new Debt(
-      req.body.id,
-      req.body.title,
-      req.body.description,
-      req.body.value,
-      req.body.dt_debt,
-      req.body.qtd_plots,
-      req.body.type_debts_id,
-      req.body.user_id,
-      new Date(),
-      new Date(),
-    )
+    const dbt = {
+      title: req.body.title ?? req.body.title,
+      description: req.body.description ?? req.body.description,
+      value: req.body.value ?? req.body.value,
+      dtDebt: req.body.dtDebt ?? req.body.dt_debt,
+      qtdPlots: req.body.qtdPlots ?? req.body.qtd_plots,
+      typeDebtsId: req.body.typeDebtsId ? parseInt(req.body.type_debts_id) : undefined,
+      userId: req.body.userId ? parseInt(req.body.user_id) : undefined,
+    }
 
     return await this.debts.create(dbt)
   }
@@ -48,17 +43,18 @@ export class DebtsController {
     if (Object.keys(req.body).length === 0) {
       return { status: 401, message: 'Não informado nenhum dado para ser atualizado' }
     }
-    const debt = new Debt(
-      req.body.id ?? req.body.id,
-      req.body.title ?? req.body.title,
-      req.body.description ?? req.body.description,
-      req.body.value ?? req.body.value,
-      req.body.dt_debt ?? req.body.dt_debt,
-      req.body.qtd_plots ?? req.body.qtd_plots,
-      req.body.type_debts_id ? parseInt(req.body.type_debts_id) : undefined,
-      req.body.user_id ? parseInt(req.body.user_id) : undefined,
-      new Date(),
-    )
+
+    const debt = {
+      id: id,
+      title: req.body.title ?? req.body.title,
+      description: req.body.description ?? req.body.description,
+      value: req.body.value ?? req.body.value,
+      dtDebt: req.body.dtDebt ?? req.body.dt_debt,
+      qtdPlots: req.body.qtdPlots ?? req.body.qtd_plots,
+      typeDebtsId: req.body.typeDebtsId ? parseInt(req.body.type_debts_id) : undefined,
+      userId: req.body.userId ? parseInt(req.body.user_id) : undefined,
+    }
+
     return await this.debts.update(id, debt)
   }
 

@@ -1,59 +1,41 @@
-import { Debts } from '@/database/entity'
-import { findOptions, returnData } from '@/domain/Utils'
-import { DeepPartial, DeleteResult, SelectQueryBuilder, UpdateResult } from 'typeorm'
-import { Debt, filterDebt, orderDebtValue, IDebt, makeDebt } from '@/domain/Debts'
+import { returnData } from '@/domain/Utils'
+import { Debt, filterDebt, orderDebtValue, makeDebt } from '@/domain/Debts'
+import { defaultDataSource, Debts } from '@/database'
 
-interface IDatabaseEntity {
-  findOne(id: number): Promise<Debts>
-  findAndCount(options?: findOptions): Promise<[unknown[], number]>
-  create(entityLike: DeepPartial<Debt>): Debts;
-  save(options?: Debt): Promise<Debt>
-  update(id: number, alias: DeepPartial<Debts>): Promise<UpdateResult>
-  createQueryBuilder(alias?: string): SelectQueryBuilder<Debts>
-  delete(id: number): Promise<DeleteResult>
+interface IDebtsRepository {
+  fetch(
+    filters?: filterDebt,
+    order?: orderDebtValue,
+    itemsPerPage?: number,
+  ): Promise<returnData>
+  create(entity: Debt): Promise<returnData>
+  update(id: number, options: Debt): Promise<returnData>
+  delete(id: number): Promise<returnData>
 }
 
-export class DebtsRepository {
-  private database: IDatabaseEntity
-
-  constructor(database: IDatabaseEntity) {
-    this.database = database
-  }
-
+export class DebtsRepository implements IDebtsRepository {
   async fetch(
     filters?: filterDebt,
     order?: orderDebtValue,
     itemsPerPage?: number,
   ): Promise<returnData> {
-    const [findDebt] = await this.database.findAndCount({ where: filters, order, take: itemsPerPage })
-    const debt = new Array(findDebt.length)
-
-    for (let i = 0; i < findDebt.length; i++) {
-      debt[i] = makeDebt(findDebt[i] as IDebt)
-    }
-    return { status: 200, entity: debt }
+    const [findDebt] = await defaultDataSource.manager.findAndCount(Debts, { where: filters, order, take: itemsPerPage })
+    const debts = new Array(findDebt.length)
+    findDebt.forEach((debt: Debts) => debts.push(makeDebt(debt)))
+    return { status: 200, entity: debts }
   }
 
-  async create(entity: Debt): Promise<returnData> {
-    return { status: 200, entity: await this.database.save(entity) }
+  async create(debt: Debt): Promise<returnData> {
+    const entity: Debts = Object.assign(new Debts(), { ...debt, id: undefined })
+    return { status: 200, entity: await defaultDataSource.manager.save(entity) }
   }
 
-  async update(id: number, data: Debt): Promise<returnData> {
-    const updateDebt = this.database.create({
-      title: data?.title,
-      dtDebt: data?.dtDebt,
-      description: data?.description,
-      value: data?.value,
-      qtdPlots: data?.qtdPlots,
-      typeDebtsId: data?.typeDebtsId,
-      userId: data?.userId,
-      updatedAt: data?.updatedAt,
-    })
-
-    return { status: 200, entity: await this.database.update(id, updateDebt) }
+  async update(id: number, debt: Debt): Promise<returnData> {
+    const entity: Debts = Object.assign(new Debts(), { ...debt, id: undefined })
+    return { status: 200, entity: await defaultDataSource.manager.update(Debts, id, entity) }
   }
 
   async delete(id: number): Promise<returnData> {
-    return { status: 200, entity: await this.database.delete(id) }
+    return { status: 200, entity: await defaultDataSource.manager.delete(Debts, id) }
   }
 }

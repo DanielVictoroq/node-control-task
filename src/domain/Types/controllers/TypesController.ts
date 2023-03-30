@@ -8,10 +8,10 @@ export class TypesController {
   }
 
   async list(res?: unknown): Promise<returnDataTypes> {
-    return await this.typesRepo.list()
+    return await this.typesRepo.fetch()
   }
 
   async insereTipo(res: any, bodyReq: any) {
-    return await this.typesRepo.list()
+    return await this.typesRepo.fetch()
   }
 }

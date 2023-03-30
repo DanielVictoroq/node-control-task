@@ -1,4 +1,15 @@
-import { ITask } from '@/domain/Tasks'
+export interface ITask {
+  id?: number,
+  name?: string
+  description?: string
+  dtTask?: Date
+  typeTaskId?: number
+  debtId?: number
+  creditId?: number
+  userId?: number
+  createdAt?: Date
+  updatedAt?: Date
+}
 
 export class Task implements ITask {
 
@@ -27,4 +38,20 @@ type orderDirection = 'ASC' | 'DESC'
 
 export type orderValue = {
   [key in typeof orderFields[number]]?: orderDirection
+}
+
+
+export function makeTask(input: ITask): Task {
+  return new Task(
+    input?.name,
+    input?.description,
+    input?.dtTask,
+    input?.typeTaskId,
+    input?.debtId,
+    input?.creditId,
+    input?.userId,
+    input?.createdAt,
+    input?.updatedAt,
+    input?.id,
+  )
 }
