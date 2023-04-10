@@ -14,4 +14,28 @@ export class CreditsService {
       itemsPerPage,
     )
   }
+
+  async create(creditModel: Record<string, unknown>): Promise<returnData> {
+    try {
+      return await this.creditRepo.create(creditModel)
+    } catch (err) {
+      return { status: 500, message: (err as Error).message }
+    }
+  }
+
+  async update(id: number, creditModel: object): Promise<returnData> {
+    try {
+      return await this.creditRepo.update(id, creditModel)
+    } catch (err) {
+      return { status: 422, message: (err as Error).message }
+    }
+  }
+
+  async delete(id: number): Promise<returnData> {
+    try {
+      return await this.creditRepo.delete(id)
+    } catch (err) {
+      return { status: 422, message: (err as Error).message }
+    }
+  }
 }

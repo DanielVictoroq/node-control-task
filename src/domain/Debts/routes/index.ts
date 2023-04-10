@@ -24,7 +24,7 @@ export function routesDebts(
     return res.status(status).json({ message, entity })
   })
 
-  router.delete('/:id', ApiMiddleware, DebtsUpdateValidate, async (req: Request, res: Response) => {
+  router.delete('/:id', ApiMiddleware, async (req: Request, res: Response) => {
     const { status, message, entity } = await debtsController.delete(req)
     return res.status(status).json({ message, entity })
   })
