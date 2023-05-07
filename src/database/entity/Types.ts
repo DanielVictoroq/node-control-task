@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne,
   ManyToOne,
 } from 'typeorm'
 import { AuxTypes } from './AuxTypes'

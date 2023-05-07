@@ -13,15 +13,8 @@ export class Types1647539075171 implements MigrationInterface {
           generationStrategy: 'increment',
         },
         { name: 'name', type: 'varchar' },
-        { name: 'aux_types_id', type: 'integer' },
       ],
     }), true)
-
-    await queryRunner.createForeignKey('types', new TableForeignKey({
-      columnNames: ['aux_types_id'],
-      referencedColumnNames: ['id'],
-      referencedTableName: 'aux_types',
-    }))
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
