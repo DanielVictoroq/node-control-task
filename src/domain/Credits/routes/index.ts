@@ -10,7 +10,8 @@ export function routesCredits(
   const router = Router()
 
   router.get('/', ApiMiddleware, async (req: Request, res: Response) => {
-    res.send('credits')
+    const { status, message, entity } = await creditsController.fetch(req)
+    return res.status(status).json({ message, entity })
   })
 
   router.post('/', ApiMiddleware, CreditCreateValidate, async (req: Request, res: Response) => {

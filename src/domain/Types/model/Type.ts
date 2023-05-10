@@ -1,7 +1,6 @@
 export interface IType {
   id: number
   name: string
-  auxTypesId: number
 }
 
 export class Type implements IType {
@@ -9,7 +8,6 @@ export class Type implements IType {
   constructor(
     public id: number,
     public name: string,
-    public auxTypesId: number,
   ) { }
 }
 
@@ -22,7 +20,6 @@ export function makeTypes(input: IType): Type {
   const type = new Type(
     input.id,
     input.name,
-    input.auxTypesId,
   )
   return type
 }

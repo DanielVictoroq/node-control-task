@@ -9,7 +9,7 @@ export function routesTypes(
   const router = Router()
 
   router.get('/tipos', ApiMiddleware, async (req: Request, res: Response) => {
-    res.send(await types.list(res))
+    res.send(await types.fetch(req))
   })
 
   return router

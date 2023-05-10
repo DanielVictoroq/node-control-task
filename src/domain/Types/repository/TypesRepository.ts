@@ -12,7 +12,6 @@ export class TypesRepository implements ITypesRepository {
       where: filters,
       order,
       take: itemsPerPage,
-      relations: ['aux_types_id'],
     })
 
     const data = new Array(dataFind.length)
