@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm'
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
 export class Types1647539075171 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -13,8 +13,16 @@ export class Types1647539075171 implements MigrationInterface {
           generationStrategy: 'increment',
         },
         { name: 'name', type: 'varchar' },
+        { name: 'type_id', type: 'integer' },
       ],
     }), true)
+
+
+    await queryRunner.createForeignKey('types', new TableForeignKey({
+      columnNames: ['type_id'],
+      referencedColumnNames: ['id'],
+      referencedTableName: 'aux_types',
+    }))
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

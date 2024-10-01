@@ -11,7 +11,7 @@ import {
 import { Types } from './Types'
 import { Users } from './Users'
 
-@Entity()
+@Entity('credits')
 export class Credits extends BaseEntity {
 
   @PrimaryGeneratedColumn()

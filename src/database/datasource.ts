@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 import type { LoggerOptions } from 'typeorm'
-import { AuxTypes, Credits, DebtMapper, ScheduleFinancials, Tasks, Types, Users } from './entity'
+import { AuxTypes, Credits, DebtMapper, Schedule, Tasks, Types, Users } from './entity'
 
 export const defaultDataSource = new DataSource({
   type: 'mysql',
@@ -19,10 +19,10 @@ export const defaultDataSource = new DataSource({
     Users,
     Credits,
     DebtMapper,
-    ScheduleFinancials,
+    Schedule,
     Tasks,
-    Types,
     AuxTypes,
+    Types,
   ],
   migrations: [__dirname + '/migration/*.{js,ts}'],
   subscribers: [],

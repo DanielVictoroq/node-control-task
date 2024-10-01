@@ -6,7 +6,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm'
-import { AuxTypes } from '..'
+import { AuxTypes } from './'
 
 @Entity()
 export class Types extends BaseEntity {
@@ -17,10 +17,10 @@ export class Types extends BaseEntity {
   @Column()
   name?: string
 
-  @Column()
-  type?: number
+  @Column({ name: 'type_id' })
+  typeId?: number
 
   @OneToOne(() => AuxTypes, auxType => auxType.id)
-  @JoinColumn({ name: 'task_id' })
-  auxType?: AuxTypes
+  @JoinColumn({ name: 'type_id' })
+  auxTypes?: AuxTypes
 }

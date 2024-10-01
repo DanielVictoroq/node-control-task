@@ -5,13 +5,13 @@ import {
   BaseEntity,
 } from 'typeorm'
 
-@Entity()
+@Entity('aux_types')
 export class AuxTypes extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column({length: 100})
+  @Column({ length: 100 })
   name?: string
 
 }

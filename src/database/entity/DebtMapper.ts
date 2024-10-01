@@ -14,7 +14,7 @@ import {
 import { Types } from './Types'
 import { Users } from './Users'
 
-@Entity()
+@Entity('debts')
 export class DebtMapper extends BaseEntity {
 
   @PrimaryGeneratedColumn()

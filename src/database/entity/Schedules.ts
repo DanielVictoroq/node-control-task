@@ -15,8 +15,8 @@ import {
   Users,
 } from '@/database/entity'
 
-@Entity()
-export class ScheduleFinancials extends BaseEntity {
+@Entity('schedule')
+export class Schedule extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number

@@ -29,7 +29,7 @@ export class Debts1647539075172 implements MigrationInterface {
     await queryRunner.createForeignKey('debts', new TableForeignKey({
       columnNames: ['type_debt_id'],
       referencedColumnNames: ['id'],
-      referencedTableName: 'type_debts',
+      referencedTableName: 'types',
     }))
 
     await queryRunner.createForeignKey('debts', new TableForeignKey({
