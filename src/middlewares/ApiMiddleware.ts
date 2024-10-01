@@ -17,6 +17,7 @@ export const ApiMiddleware = (req: Request, res: Response, next: NextFunction) =
     jwt.verify(token, `${process.env.JWT_SECRET}`)
 
     next()
+    return
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.name === 'TokenExpiredError') {
@@ -25,5 +26,6 @@ export const ApiMiddleware = (req: Request, res: Response, next: NextFunction) =
     }
 
     res.status(500).json({ message: 'Falha ao autenticar usuário' })
+    return
   }
 }

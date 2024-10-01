@@ -6,7 +6,7 @@ import {
   BaseEntity,
   OneToMany,
 } from 'typeorm'
-import { ScheduleFinancials } from './ScheduleFinancials'
+import { ScheduleFinancials } from './Schedules'
 import { Tasks } from './Tasks'
 
 @Entity('users')
@@ -33,6 +33,6 @@ export class Users extends BaseEntity {
   @OneToMany(() => Tasks, tasks => tasks.user_id)
   tasks?: Task[]
 
-  @OneToMany(() => ScheduleFinancials, schedule => schedule.user_id)
+  @OneToMany(() => ScheduleFinancials, schedule => schedule.userId)
   schedules?: ScheduleFinancials[]
 }

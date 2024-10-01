@@ -3,10 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
+  OneToOne,
   JoinColumn,
-  ManyToOne,
 } from 'typeorm'
-import { AuxTypes } from './AuxTypes'
+import { AuxTypes } from '..'
 
 @Entity()
 export class Types extends BaseEntity {
@@ -17,8 +17,10 @@ export class Types extends BaseEntity {
   @Column()
   name?: string
 
-  @ManyToOne(() => AuxTypes, auxTypes => auxTypes.id)
-  @JoinColumn({name: 'aux_types_id'})
-  aux_types_id?: AuxTypes
+  @Column()
+  type?: number
 
+  @OneToOne(() => AuxTypes, auxType => auxType.id)
+  @JoinColumn({ name: 'task_id' })
+  auxType?: AuxTypes
 }

@@ -17,18 +17,19 @@ export class Debts1647539075172 implements MigrationInterface {
         { name: 'description', type: 'longtext' },
         { name: 'value', type: 'decimal', precision: 11, scale: 2 },
         { name: 'dt_debt', type: 'timestamp' },
-        { name: 'qtd_plots', type: 'integer', isNullable: true },
-        { name: 'type_debts_id', type: 'integer' },
+        { name: 'type_debt_id', type: 'integer' },
+        { name: 'qtd_installments', type: 'integer', isNullable: true },
         { name: 'user_id', type: 'integer' },
-        { name: 'created_at', type: 'timestamp', isNullable: true },
-        { name: 'updated_at', type: 'timestamp', default: 'now()', isNullable: true },
+        { name: 'created_at', type: 'timestamp', default: 'now()', },
+        { name: 'updated_at', type: 'timestamp', isNullable: true },
+        { name: 'deleted_at', type: 'timestamp', isNullable: true },
       ],
     }), true)
 
     await queryRunner.createForeignKey('debts', new TableForeignKey({
-      columnNames: ['type_debts_id'],
+      columnNames: ['type_debt_id'],
       referencedColumnNames: ['id'],
-      referencedTableName: 'types',
+      referencedTableName: 'type_debts',
     }))
 
     await queryRunner.createForeignKey('debts', new TableForeignKey({
