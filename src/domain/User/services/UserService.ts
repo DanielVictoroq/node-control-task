@@ -11,6 +11,7 @@ export class UserService {
   async find(user_id: number): Promise<returnDataUsers | undefined> {
     const find = await this.userRepo.find(user_id)
     if (find) return find
+    return
   }
 
   async create(user: User, res: Response): Promise<Response> {

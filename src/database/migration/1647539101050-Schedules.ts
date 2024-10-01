@@ -4,7 +4,7 @@ export class ScheduleFinancials1647539101050 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(new Table({
-      name: 'schedule_financials',
+      name: 'schedules',
       columns: [
         {
           name: 'id',
@@ -18,27 +18,29 @@ export class ScheduleFinancials1647539101050 implements MigrationInterface {
         { name: 'credit_id', type: 'integer', isNullable: true },
         { name: 'task_id', type: 'integer', isNullable: true },
         { name: 'user_id', type: 'integer' },
-        { name: 'created_at', type: 'timestamp', isNullable: true },
+        { name: 'created_at', type: 'timestamp', default: 'now()' },
+        { name: 'updated_at', type: 'timestamp', isNullable: true },
+        { name: 'deleted_at', type: 'timestamp', isNullable: true },
       ],
     }), true)
 
-    await queryRunner.createForeignKey('schedule_financials', new TableForeignKey({
+    await queryRunner.createForeignKey('schedules', new TableForeignKey({
       columnNames: ['debt_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'debts',
     }))
 
-    await queryRunner.createForeignKey('schedule_financials', new TableForeignKey({
+    await queryRunner.createForeignKey('schedules', new TableForeignKey({
       columnNames: ['credit_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'credits',
     }))
-    await queryRunner.createForeignKey('schedule_financials', new TableForeignKey({
+    await queryRunner.createForeignKey('schedules', new TableForeignKey({
       columnNames: ['task_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'tasks',
     }))
-    await queryRunner.createForeignKey('schedule_financials', new TableForeignKey({
+    await queryRunner.createForeignKey('schedules', new TableForeignKey({
       columnNames: ['user_id'],
       referencedColumnNames: ['id'],
       referencedTableName: 'users',
@@ -46,7 +48,7 @@ export class ScheduleFinancials1647539101050 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('schedule_financials')
+    await queryRunner.dropTable('schedules')
   }
 
 }

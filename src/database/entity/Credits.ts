@@ -11,7 +11,7 @@ import {
 import { Types } from './Types'
 import { Users } from './Users'
 
-@Entity()
+@Entity('credits')
 export class Credits extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -26,18 +26,18 @@ export class Credits extends BaseEntity {
   @Column('decimal', { precision: 11, scale: 2 })
   value?: number
 
-  @Column({name: 'dt_credit'})
+  @Column({ name: 'dt_credit' })
   dtCredit?: Date
 
   @Column({ nullable: true })
   qtdRepeat?: number
 
   @ManyToOne(() => Types, type => type.id)
-  @JoinColumn({name: 'type_credits_id'})
+  @JoinColumn({ name: 'type_credits_id' })
   typeCreditsId?: Type
 
   @ManyToOne(() => Users, users => users.id)
-  @JoinColumn({name: 'user_id'})
+  @JoinColumn({ name: 'user_id' })
   userId?: User
 
   @Column({ nullable: true })

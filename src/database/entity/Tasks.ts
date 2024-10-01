@@ -9,7 +9,7 @@ import {
 
 import {
   Credits,
-  Debts,
+  DebtMapper,
   Types,
   Users,
 } from '@/database/entity'
@@ -29,9 +29,9 @@ export class Tasks extends BaseEntity {
   @Column()
   dt_task?: Date
 
-  @ManyToOne(() => Debts, debts => debts.id)
+  @ManyToOne(() => DebtMapper, debts => debts.id)
   @JoinColumn({ name: 'debt_id' })
-  debt_id?: Debts
+  debt_id?: DebtMapper
 
   @ManyToOne(() => Credits, credits => credits.id)
   @JoinColumn({ name: 'credit_id' })

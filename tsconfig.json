@@ -1,7 +1,13 @@
 {
     "compilerOptions": {
+        "noEmit": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "ESNext"
+        ],
         "module": "CommonJS",
-        "target": "es2021",
+        "target": "ES2021",
+        "allowJs": false,
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -9,25 +15,33 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "removeComments": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
         "sourceMap": true,
-        "outDir": "./dist",
-        "rootDir": "./src",
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
+            "@/domain/*": [
+                "./src/domain/*"
+            ],
+            "package.json": [
+                "./package.json"
+            ],
             "@/*": [
                 "./src/*"
             ]
         }
     },
     "files": [
-        "./src/index.ts"
+        "src/environment.d.ts"
     ],
     "include": [
-        "./src/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
-        "node_modules"
+        "./src/**/*.test.ts",
+        "./node_modules"
     ]
 }

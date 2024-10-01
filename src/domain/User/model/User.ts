@@ -1,4 +1,4 @@
-import { ScheduleFinancials, Users } from '@/database/entity'
+import { Schedule, Users } from '@/database/entity'
 import { Task } from '@/domain/Tasks'
 
 export interface IUser {
@@ -9,7 +9,7 @@ export interface IUser {
   document?: string
   email?: string
   tasks?: Task[],
-  schedules?: ScheduleFinancials[],
+  schedules?: Schedule[],
 }
 
 export class User implements IUser {
@@ -22,7 +22,7 @@ export class User implements IUser {
     public document?: string,
     public email?: string,
     public tasks?: Task[],
-    public schedules?: ScheduleFinancials[],
+    public schedules?: Schedule[],
   ) { }
 }
 

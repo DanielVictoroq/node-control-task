@@ -1,33 +1,23 @@
-    insert into
-        aux_types(id, name)
-    VALUES
-        (1, 'Débitos'),
-        (2, 'Créditos'),
-        (3, 'Tarefas');
+insert into
+    aux_types(id, name)
+VALUES
+    (1, 'Débitos'),
+    (2, 'Créditos'),
+    (3, 'Tarefas');
 
-    insert into
-        types(id, name)
-    VALUES
-        (1, 'Boleto'),
-        (2, 'Cartão de Crédito'),
-        (3, 'Resgates'),
-        (4, 'Salário'),
-        (5, 'Depósito'),
-        (6, 'Avulsos'),
-        (7, 'Pagamentos de Boletos'),
-        (8, 'Reuniões'),
-        (9, 'Depósitos'),
-        
-    insert into
-        types_aux_types(id, aux_types_id)
-    VALUES
-        (1, 1),
-        (2, 1),
-        (3, 1),
-        (3, 2),
-        (4, 2),
-        (5, 2),
-        (5, 3),
-        (6, 2),
-        (7, 3),
-        (8, 3);
+insert into
+    types(id, name, type_id)
+VALUES
+    (1, 'Boleto', 1),
+    (2, 'Cartão de Crédito', 1),
+    (3, 'Saque', 1),
+    (4, 'Outros', 1),
+    (5, 'Salário', 2),
+    (6, 'Depósito', 2),
+    (7, 'Avulsos', 2),
+    (8, 'Outros', 2),
+    (9, 'Pagamentos de Boletos', 3),
+    (10, 'Reuniões', 3),
+    (11, 'Depositar', 3),
+    (12, 'Sacar', 3),
+    (13, 'Outros', 3);

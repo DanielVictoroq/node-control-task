@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 import type { LoggerOptions } from 'typeorm'
-import { AuxTypes, Credits, Debts, ScheduleFinancials, Tasks, Types, Users } from './entity'
+import { AuxTypes, Credits, DebtMapper, Schedule, Tasks, Types, Users } from './entity'
 
 export const defaultDataSource = new DataSource({
   type: 'mysql',
@@ -9,7 +9,7 @@ export const defaultDataSource = new DataSource({
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'root',
   database: process.env.DB_DATABASE || 'baseControl',
-  ssl: process.env.DB_SSL || { rejectUnauthorized: false },
+  // ssl: process.env.DB_SSL || { rejectUnauthorized: false },
   charset: 'utf8mb4_general_ci',
   timezone: process.env.DB_TIMEZONE || 'America/Fortaleza',
   synchronize: false,
@@ -18,11 +18,11 @@ export const defaultDataSource = new DataSource({
   entities: [
     Users,
     Credits,
-    Debts,
-    ScheduleFinancials,
+    DebtMapper,
+    Schedule,
     Tasks,
-    Types,
     AuxTypes,
+    Types,
   ],
   migrations: [__dirname + '/migration/*.{js,ts}'],
   subscribers: [],
